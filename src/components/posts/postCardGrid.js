@@ -2,7 +2,6 @@ import PostCard from "./postCard";
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import ReactPlaceholder from "react-placeholder/lib";
-import { data } from "../../data";
 
 export const REQUEST_STATUS = {
   LOADING: "loading",
@@ -13,19 +12,25 @@ export const REQUEST_STATUS = {
 function PostCardGrid() {
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
   const [postData, setPostData] = useState([]);
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  let response;
+  let chapters;
   useEffect(() => {
     async function delayFunc() {
       try {
-        await delay(2000);
+        response = await fetch("http://127.0.0.1:5000/api/v1/chapters", {
+          method: "GET",
+          headers: {},
+        });
+        chapters = await response.json();
         setRequestStatus(REQUEST_STATUS.SUCCESS);
-        setPostData(data);
+        setPostData(chapters);
       } catch (error) {
         setRequestStatus(REQUEST_STATUS.FAILURE);
       }
     }
     delayFunc();
-  });
+  }, []);
   return (
     <ReactPlaceholder
       type="media"
@@ -40,8 +45,8 @@ function PostCardGrid() {
                 title={post.title}
                 book={post.book}
                 chapter={post.chapter}
-                moralRating={post.rating.moral}
-                scientificRating={post.rating.scientific}
+                moralRating={String(post.rating.moral)}
+                scientificRating={String(post.rating.scientific)}
               />
             </Col>
           );
