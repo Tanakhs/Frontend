@@ -4,9 +4,9 @@ import "../../css/post.css";
 
 function PostRatings(props) {
   return (
-    <div className="ratingDiv">
+    <div className="rating-div">
       <div className="rating">
-        <Rating {...props} weight="15px" />
+        <Rating {...props} weight="15px" readonly color="grey" />
       </div>
       {props.title}
     </div>
