@@ -2,10 +2,12 @@ import "./App.css";
 import React from "react";
 import PostCardGrid from "./components/posts/postCardGrid";
 
-class App extends React.Component {
-  render() {
-    return <PostCardGrid />;
-  }
+function App() {
+  return (
+    <div className="main-div">
+      <PostCardGrid />
+    </div>
+  );
 }
 
 export default App;
