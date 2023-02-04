@@ -1,11 +1,14 @@
 import "./App.css";
 import React from "react";
-import PostCardGrid from "./components/posts/postCardGrid";
-
+import ChapterCardGrid from "./components/chapters/chapterCardGrid";
+import MainNavbar from "./components/mainNavbar";
 function App() {
   return (
-    <div className="main-div">
-      <PostCardGrid />
+    <div>
+      <MainNavbar />
+      <div className="main-div">
+        <ChapterCardGrid />
+      </div>
     </div>
   );
 }

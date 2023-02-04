@@ -1,4 +1,4 @@
-import PostCard from "./postCard";
+import ChapterCard from "./chapterCard";
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import ReactPlaceholder from "react-placeholder/lib";
@@ -9,7 +9,7 @@ export const REQUEST_STATUS = {
   FAILURE: "failure",
 };
 
-function PostCardGrid() {
+function ChapterCardGrid() {
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
   const [postData, setPostData] = useState([]);
 
@@ -41,10 +41,10 @@ function PostCardGrid() {
         {postData.map(function(post) {
           return (
             <Col key={post._id}>
-              <PostCard
+              <ChapterCard
                 title={post.title}
                 book={post.book}
-                chapter={post.chapter}
+                chapter={post.chapter_letters}
                 moralRating={String(post.rating.moral)}
                 scientificRating={String(post.rating.scientific)}
               />
@@ -56,4 +56,4 @@ function PostCardGrid() {
   );
 }
 
-export default PostCardGrid;
+export default ChapterCardGrid;

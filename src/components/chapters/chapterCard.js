@@ -1,8 +1,8 @@
 import React from "react";
-import PostRatings from "./postRatings";
+import ChapterRatings from "./chapterRatings";
 import Card from "react-bootstrap/Card";
 
-function PostCard(props) {
+function ChapterCard(props) {
   return (
     <div style={{ marginLeft: "2rem", marginRight: "2rem", marginTop: "2rem" }}>
       <Card text={"light"} onClick={() => console.log("hello")}>
@@ -17,15 +17,15 @@ function PostCard(props) {
           <Card.Title bsPrefix className="post-title">
             {props.title}
           </Card.Title>
-          <Card.Text dir="rtl" className="post-text">
+          <Card.Text className="post-text">
             {props.book}: {props.chapter}'
           </Card.Text>
         </Card.ImgOverlay>
       </Card>
-      <PostRatings value={props.moralRating} title="מוסר" />
-      <PostRatings value={props.scientificRating} title="מדע" />
+      <ChapterRatings value={props.moralRating} title="מוסר" />
+      <ChapterRatings value={props.scientificRating} title="מדע" />
     </div>
   );
 }
 
-export default PostCard;
+export default ChapterCard;
