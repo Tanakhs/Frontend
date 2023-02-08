@@ -12,7 +12,7 @@ function MainNavbar() {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">תנ"כס</Navbar.Brand>
+        <Navbar.Brand href="/">תנ"כס</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav style={{ maxHeight: "100px" }} navbarScroll>

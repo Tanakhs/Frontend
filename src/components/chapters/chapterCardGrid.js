@@ -11,7 +11,7 @@ export const REQUEST_STATUS = {
 
 function ChapterCardGrid() {
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
-  const [postData, setPostData] = useState([]);
+  const [chaptersData, setChaptersData] = useState([]);
 
   let response;
   let chapters;
@@ -23,8 +23,8 @@ function ChapterCardGrid() {
           headers: {},
         });
         chapters = await response.json();
+        setChaptersData(chapters);
         setRequestStatus(REQUEST_STATUS.SUCCESS);
-        setPostData(chapters);
       } catch (error) {
         setRequestStatus(REQUEST_STATUS.FAILURE);
       }
@@ -38,10 +38,11 @@ function ChapterCardGrid() {
       ready={requestStatus === REQUEST_STATUS.SUCCESS}
     >
       <Row xs={1} md={3} className="g-4">
-        {postData.map(function(post) {
+        {chaptersData.map(function(post) {
           return (
             <Col key={post._id}>
               <ChapterCard
+                _id={post._id}
                 title={post.title}
                 book={post.book}
                 chapter={post.chapter_letters}

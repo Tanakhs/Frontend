@@ -1,14 +1,17 @@
 import "./App.css";
 import React from "react";
-import ChapterCardGrid from "./components/chapters/chapterCardGrid";
+import { Routes, Route } from "react-router-dom";
+import ChapterPost from "./components/chapters/chapter/chapterPost";
+import HomePage from "./components/homePage";
 import MainNavbar from "./components/mainNavbar";
 function App() {
   return (
     <div>
       <MainNavbar />
-      <div className="main-div">
-        <ChapterCardGrid />
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/chapter/:_id" element={<ChapterPost />} />
+      </Routes>
     </div>
   );
 }

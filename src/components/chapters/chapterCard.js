@@ -1,11 +1,17 @@
 import React from "react";
 import ChapterRatings from "./chapterRatings";
 import Card from "react-bootstrap/Card";
+import { useNavigate } from "react-router-dom";
 
-function ChapterCard(props) {
+export default function ChapterCard(props) {
+  const navigate = useNavigate();
+
   return (
     <div style={{ marginLeft: "2rem", marginRight: "2rem", marginTop: "2rem" }}>
-      <Card text={"light"} onClick={() => console.log("hello")}>
+      <Card
+        text={"light"}
+        onClick={() => navigate(`/chapter/${String(props._id)}`)}
+      >
         <Card.Img
           style={{ borderRadius: "0" }}
           src={
@@ -27,5 +33,3 @@ function ChapterCard(props) {
     </div>
   );
 }
-
-export default ChapterCard;
