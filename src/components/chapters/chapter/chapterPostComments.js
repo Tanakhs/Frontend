@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../../../css/ChapterPostComments.css";
-
+import {
+  addComment,
+  deleteComment,
+  updateComment,
+} from "../../../apiRequests/apiRequests";
 export default function ChapterPostComments(props) {
   const [comments, setComments] = useState(
     JSON.stringify(props.comments) === undefined ? [] : props.comments
@@ -10,7 +14,7 @@ export default function ChapterPostComments(props) {
 
   useEffect(() => {
     const addCommentBtn = document.getElementById("add-comment-btn");
-    const commentTextarea = document.getElementById("comment-text");
+    const commentTextarea = document.getElementById("comment");
 
     commentTextarea.addEventListener("input", () => {
       if (commentTextarea.value.trim() === "") {
@@ -21,60 +25,22 @@ export default function ChapterPostComments(props) {
       }
     });
   });
-  const addComment = async (comment) => {
+  const addCommentHandle = async (comment) => {
     if (comment.trim() === "") {
       return;
     }
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjQ4Nzg0NSwianRpIjoiNjFlYWFkNTQtODMyNS00MWFkLThjYTktNTY4MTZmMmMxNTk4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY0ODc4NDUsImV4cCI6MTY3NjU3NDI0NX0.p1lRmp1QgN0hsWHfqMnRjEKLcsndJZsXEiRSLA7uTMM"
-    );
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      content: comment,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    const res = await fetch(
-      `http://127.0.0.1:5000/api/v1/comment/${props.chapterId}`,
-      requestOptions
-    )
-      .then((response) => response.json())
+    await addComment(props.chapterId, comment)
       .then((result) =>
         setComments([...comments, { content: comment, _id: result["_id"] }])
       )
       .catch((error) => console.log("error", error));
   };
 
-  const deleteComment = async (index) => {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjQ4Nzg0NSwianRpIjoiNjFlYWFkNTQtODMyNS00MWFkLThjYTktNTY4MTZmMmMxNTk4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY0ODc4NDUsImV4cCI6MTY3NjU3NDI0NX0.p1lRmp1QgN0hsWHfqMnRjEKLcsndJZsXEiRSLA7uTMM"
-    );
-    myHeaders.append("Content-Type", "application/json");
-
-    var requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    await fetch(
-      `http://127.0.0.1:5000/api/v1/comment/${props.chapterId}/${comments[index]["_id"]}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+  const deleteCommentHandle = async (index) => {
+    await deleteComment(
+      props.chapterId,
+      comments[index]["_id"]
+    ).catch((error) => console.log("error", error));
     setComments(comments.filter((_, i) => i !== index));
   };
 
@@ -83,37 +49,17 @@ export default function ChapterPostComments(props) {
     setEditingComment(comments[index].content);
   };
 
-  const updateComment = (index, newComment) => {
+  const updateCommentHandle = async (index, newComment) => {
     const updatedComments = [...comments];
     updatedComments[index].content = newComment;
     setComments(updatedComments);
     setEditingIndex(-1);
     setEditingComment("");
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjQ4Nzg0NSwianRpIjoiNjFlYWFkNTQtODMyNS00MWFkLThjYTktNTY4MTZmMmMxNTk4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY0ODc4NDUsImV4cCI6MTY3NjU3NDI0NX0.p1lRmp1QgN0hsWHfqMnRjEKLcsndJZsXEiRSLA7uTMM"
-    );
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      content: comments[index].content,
-    });
-
-    var requestOptions = {
-      method: "PUT",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(
-      `http://127.0.0.1:5000/api/v1/comment/${props.chapterId}/${comments[index]["_id"]}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    await updateComment(
+      props.chapterId,
+      comments[index]["_id"],
+      comments[index].content
+    ).catch((error) => console.log("error", error));
   };
 
   return (
@@ -123,18 +69,18 @@ export default function ChapterPostComments(props) {
         id="comment-form"
         onSubmit={(e) => {
           e.preventDefault();
-          addComment(e.target.elements.comment.value);
+          addCommentHandle(e.target.elements.comment.value);
           e.target.elements.comment.value = "";
         }}
       >
         <textarea
-          id="comment-text"
+          id="comment"
           placeholder="Enter your comment here"
           className="comments-section-textarea"
         ></textarea>
         <br></br>
         <button
-          disabled="true"
+          disabled={true}
           type="submit"
           id="add-comment-btn"
           className="comments-section-button"
@@ -150,7 +96,7 @@ export default function ChapterPostComments(props) {
                 key={index}
                 onSubmit={(e) => {
                   e.preventDefault();
-                  updateComment(index, e.target.elements.comment.value);
+                  updateCommentHandle(index, e.target.elements.comment.value);
                 }}
               >
                 <textarea
@@ -184,7 +130,7 @@ export default function ChapterPostComments(props) {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteComment(index)}
+                  onClick={() => deleteCommentHandle(index)}
                   className="comments-section-button comments-section-button-delete"
                 >
                   Delete

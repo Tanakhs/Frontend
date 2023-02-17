@@ -5,6 +5,7 @@ import ReactPlaceholder from "react-placeholder/lib";
 import ChapterPostHeader from "./chapterPostHeader";
 import ChapterPostVerses from "./chapterPostVerses";
 import ChapterPostComments from "./chapterPostComments";
+import { getChapter } from "../../../apiRequests/apiRequests";
 export const REQUEST_STATUS = {
   LOADING: "loading",
   SUCCESS: "success",
@@ -15,19 +16,10 @@ function ChapterPost() {
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
   const [chapterData, setChapterData] = useState([]);
 
-  let response;
-  let chapter;
   useEffect(() => {
     async function delayFunc() {
       try {
-        response = await fetch(
-          `http://127.0.0.1:5000/api/v1/chapter/${String(_id)}`,
-          {
-            method: "GET",
-            headers: {},
-          }
-        );
-        chapter = await response.json();
+        var chapter = await getChapter(String(_id));
         setChapterData(chapter);
         setRequestStatus(REQUEST_STATUS.SUCCESS);
       } catch (error) {
