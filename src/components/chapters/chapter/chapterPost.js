@@ -41,7 +41,7 @@ function ChapterPost() {
       <ChapterPostVerses verses={chapterData.verses}></ChapterPostVerses>
       <p>{chapterData.analysis}</p>
       <ChapterPostComments
-        chapterId={chapterData["_id"]}
+        chapterId={chapterData["id"]}
         comments={chapterData.comments}
       ></ChapterPostComments>
     </ReactPlaceholder>

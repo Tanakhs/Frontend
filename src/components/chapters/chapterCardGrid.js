@@ -36,9 +36,9 @@ function ChapterCardGrid() {
       <Row xs={1} md={3} className="g-4">
         {chaptersData.map(function(post) {
           return (
-            <Col key={post._id}>
+            <Col key={post.id}>
               <ChapterCard
-                _id={post._id}
+                _id={post.id}
                 title={post.title}
                 book={post.book}
                 chapter={post.chapter_letters}

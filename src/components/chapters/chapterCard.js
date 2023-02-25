@@ -14,19 +14,17 @@ export default function ChapterCard(props) {
       >
         <Card.Img
           style={{ borderRadius: "0" }}
-          src={
-            "https://meyda.education.gov.il/files/pop/2418/%D7%91%D7%A8%D7%99%D7%90%D7%AA%D7%A2%D7%95%D7%9C%D7%9D%D7%97%D7%98%D7%A2.jpg"
-          }
-          alt="Card image"
+          src="https://meyda.education.gov.il/files/pop/2418/%D7%91%D7%A8%D7%99%D7%90%D7%AA%D7%A2%D7%95%D7%9C%D7%9D%D7%97%D7%98%D7%A2.jpg"
+          alt="Example image"
         />
-        <Card.ImgOverlay>
+        <div className="img-overlay">
           <Card.Title bsPrefix className="post-title">
-            {props.title}
+            {/* {props.title} */}ואהבת לרעך כמוך
           </Card.Title>
           <Card.Text className="post-text">
             {props.book}: {props.chapter}'
           </Card.Text>
-        </Card.ImgOverlay>
+        </div>
       </Card>
       <ChapterRatings value={props.moralRating} title="מוסר" />
       <ChapterRatings value={props.scientificRating} title="מדע" />

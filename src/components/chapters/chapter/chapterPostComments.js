@@ -31,16 +31,15 @@ export default function ChapterPostComments(props) {
     }
     await addComment(props.chapterId, comment)
       .then((result) =>
-        setComments([...comments, { content: comment, _id: result["_id"] }])
+        setComments([...comments, { content: comment, id: result["_id"] }])
       )
       .catch((error) => console.log("error", error));
   };
 
   const deleteCommentHandle = async (index) => {
-    await deleteComment(
-      props.chapterId,
-      comments[index]["_id"]
-    ).catch((error) => console.log("error", error));
+    await deleteComment(props.chapterId, comments[index]["id"]).catch((error) =>
+      console.log("error", error)
+    );
     setComments(comments.filter((_, i) => i !== index));
   };
 
@@ -57,7 +56,7 @@ export default function ChapterPostComments(props) {
     setEditingComment("");
     await updateComment(
       props.chapterId,
-      comments[index]["_id"],
+      comments[index]["id"],
       comments[index].content
     ).catch((error) => console.log("error", error));
   };

@@ -1,3 +1,5 @@
+const bearer =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NzMyMTIxNiwianRpIjoiOWRiMTNmNjQtY2UxNC00Y2NlLWEwMjgtMTI1M2M4NGQzZDE3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzczMjEyMTYsImV4cCI6MTY3NzQwNzYxNn0.ljsmqp6e2X4Hzirz3BmI6MDRapqZBbHBQc3qqV2BOjU";
 export async function getChapters() {
   var response = await fetch("http://127.0.0.1:5000/api/v1/chapters", {
     method: "GET",
@@ -19,10 +21,7 @@ export async function getChapter(chapterId) {
 }
 export async function addComment(chapterId, comment) {
   var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjY0ODU4OSwianRpIjoiMTFiMzk2YmUtMDc5Mi00OTI2LWIxZjItYmFiMjVhMWViZTVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY2NDg1ODksImV4cCI6MTY3NjczNDk4OX0.5qURSm7lQSVlo5dNtdRS1kLRVBULA5rZ_lSn2owOAvQ"
-  );
+  myHeaders.append("Authorization", bearer);
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
@@ -45,10 +44,7 @@ export async function addComment(chapterId, comment) {
 
 export async function deleteComment(chapterId, commentId) {
   var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjY0ODU4OSwianRpIjoiMTFiMzk2YmUtMDc5Mi00OTI2LWIxZjItYmFiMjVhMWViZTVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY2NDg1ODksImV4cCI6MTY3NjczNDk4OX0.5qURSm7lQSVlo5dNtdRS1kLRVBULA5rZ_lSn2owOAvQ"
-  );
+  myHeaders.append("Authorization", bearer);
   myHeaders.append("Content-Type", "application/json");
 
   var requestOptions = {
@@ -66,10 +62,7 @@ export async function deleteComment(chapterId, commentId) {
 
 export async function updateComment(chapterId, commentId, newContent) {
   var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NjY0ODU4OSwianRpIjoiMTFiMzk2YmUtMDc5Mi00OTI2LWIxZjItYmFiMjVhMWViZTVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzY2NDg1ODksImV4cCI6MTY3NjczNDk4OX0.5qURSm7lQSVlo5dNtdRS1kLRVBULA5rZ_lSn2owOAvQ"
-  );
+  myHeaders.append("Authorization", bearer);
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
