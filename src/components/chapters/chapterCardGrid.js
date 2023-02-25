@@ -2,6 +2,7 @@ import ChapterCard from "./chapterCard";
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import ReactPlaceholder from "react-placeholder/lib";
+import { getChapters } from "../../apiRequests/apiRequests";
 
 export const REQUEST_STATUS = {
   LOADING: "loading",
@@ -13,23 +14,18 @@ function ChapterCardGrid() {
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
   const [chaptersData, setChaptersData] = useState([]);
 
-  let response;
   let chapters;
   useEffect(() => {
-    async function delayFunc() {
+    async function getData() {
       try {
-        response = await fetch("http://127.0.0.1:5000/api/v1/chapters", {
-          method: "GET",
-          headers: {},
-        });
-        chapters = await response.json();
+        chapters = await getChapters();
         setChaptersData(chapters);
         setRequestStatus(REQUEST_STATUS.SUCCESS);
       } catch (error) {
         setRequestStatus(REQUEST_STATUS.FAILURE);
       }
     }
-    delayFunc();
+    getData();
   }, []);
   return (
     <ReactPlaceholder
@@ -40,9 +36,9 @@ function ChapterCardGrid() {
       <Row xs={1} md={3} className="g-4">
         {chaptersData.map(function(post) {
           return (
-            <Col key={post._id}>
+            <Col key={post.id}>
               <ChapterCard
-                _id={post._id}
+                _id={post.id}
                 title={post.title}
                 book={post.book}
                 chapter={post.chapter_letters}
