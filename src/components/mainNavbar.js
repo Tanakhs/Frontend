@@ -10,7 +10,7 @@ function MainNavbar() {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" style={{ marginBottom: "2rem" }}>
       <Container fluid>
         <Navbar.Brand href="/">תנ"כס</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

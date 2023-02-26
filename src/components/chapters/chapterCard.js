@@ -1,33 +1,53 @@
 import React from "react";
 import ChapterRatings from "./chapterRatings";
-import Card from "react-bootstrap/Card";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
 export default function ChapterCard(props) {
   const navigate = useNavigate();
 
   return (
-    <div style={{ marginLeft: "2rem", marginRight: "2rem", marginTop: "2rem" }}>
-      <Card
-        text={"light"}
-        onClick={() => navigate(`/chapter/${String(props._id)}`)}
-      >
-        <Card.Img
-          style={{ borderRadius: "0" }}
-          src="https://meyda.education.gov.il/files/pop/2418/%D7%91%D7%A8%D7%99%D7%90%D7%AA%D7%A2%D7%95%D7%9C%D7%9D%D7%97%D7%98%D7%A2.jpg"
-          alt="Example image"
-        />
-        <div className="img-overlay">
-          <Card.Title bsPrefix className="post-title">
-            {/* {props.title} */}ואהבת לרעך כמוך
-          </Card.Title>
-          <Card.Text className="post-text">
-            {props.book}: {props.chapter}'
-          </Card.Text>
-        </div>
-      </Card>
-      <ChapterRatings value={props.moralRating} title="מוסר" />
-      <ChapterRatings value={props.scientificRating} title="מדע" />
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        sx={{ height: 140 }}
+        image="https://meyda.education.gov.il/files/pop/2418/%D7%91%D7%A8%D7%99%D7%90%D7%AA%D7%A2%D7%95%D7%9C%D7%9D%D7%97%D7%98%D7%A2.jpg"
+        title="green iguana"
+      />
+      <CardContent>
+        <Typography variant="h5" component="div">
+          ואהבת לרעך כמוך
+        </Typography>
+        <Typography
+          variant="h6"
+          color="text.secondary"
+          className="post-text"
+          gutterBottom
+        >
+          {props.book}: {props.chapter}'
+        </Typography>
+        <Typography gutterBottom variant="body2" color="text.secondary">
+          לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש
+          שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף.
+        </Typography>
+        <ChapterRatings value={props.moralRating} title="מוסר" />
+        <ChapterRatings value={props.scientificRating} title="מדע" />
+      </CardContent>
+      <CardActions>
+        <Typography>
+          <Button size="small">שתפו</Button>
+          <Button
+            size="small"
+            onClick={() => navigate(`/chapter/${String(props._id)}`)}
+          >
+            קראו עוד
+          </Button>
+        </Typography>
+      </CardActions>
+    </Card>
   );
 }

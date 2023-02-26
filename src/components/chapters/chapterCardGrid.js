@@ -1,8 +1,8 @@
 import ChapterCard from "./chapterCard";
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
 import ReactPlaceholder from "react-placeholder/lib";
 import { getChapters } from "../../apiRequests/apiRequests";
+import Grid from "@mui/material/Grid";
 
 export const REQUEST_STATUS = {
   LOADING: "loading",
@@ -33,10 +33,10 @@ function ChapterCardGrid() {
       rows={20}
       ready={requestStatus === REQUEST_STATUS.SUCCESS}
     >
-      <Row xs={1} md={3} className="g-4">
+      <Grid container spacing={3}>
         {chaptersData.map(function(post) {
           return (
-            <Col key={post.id}>
+            <Grid item xs={4} key={post.id}>
               <ChapterCard
                 _id={post.id}
                 title={post.title}
@@ -45,10 +45,10 @@ function ChapterCardGrid() {
                 moralRating={String(post.rating.moral)}
                 scientificRating={String(post.rating.scientific)}
               />
-            </Col>
+            </Grid>
           );
         })}
-      </Row>
+      </Grid>
     </ReactPlaceholder>
   );
 }

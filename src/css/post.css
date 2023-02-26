@@ -23,22 +23,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6); /* Add this line */
+  background-color: #D9D9D999; /* Add this line */
 
-}
-
-.post-title,
-.post-text {
-  right: 5rem;
-  color: white;
-  width: 100%;
-  box-sizing: border-box;
-  padding-right: 10px; 
-  background-color: transparent;
 }
 
 .post-text{
   text-align: left;
-  padding-left: 10px; 
-
 }
