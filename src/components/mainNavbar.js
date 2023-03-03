@@ -1,43 +1,73 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import SignUpModal from "./signUpModal";
+import PropTypes from "prop-types";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-function MainNavbar() {
-  const [modalShow, setModalShow] = useState(false);
-
+export default function MainNavbar(props) {
+  const { sections, title } = props;
+  const [showModal, setShowModal] = useState(false);
   return (
-    <Navbar bg="light" expand="lg" style={{ marginBottom: "2rem" }}>
-      <Container fluid>
-        <Navbar.Brand href="/">תנ"כס</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav style={{ maxHeight: "100px" }} navbarScroll>
-            <Nav.Link href="#action1">הברית הישנה</Nav.Link>
-            <Nav.Link href="#action2">הברית החדשה</Nav.Link>
-            <Nav.Link href="#">קוראן</Nav.Link>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
-            <Nav.Link href="#" onClick={() => setModalShow(true)}>
-              הירשם
-            </Nav.Link>
-
-            <SignUpModal show={modalShow} onHide={() => setModalShow(false)} />
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <React.Fragment>
+      <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Button size="small">Subscribe</Button>
+        <Typography
+          component="h2"
+          variant="h5"
+          color="inherit"
+          align="center"
+          noWrap
+          sx={{ flex: 1 }}
+        >
+          <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
+            {" "}
+            {title}
+          </a>
+        </Typography>
+        <IconButton>
+          <SearchIcon />
+        </IconButton>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setShowModal(true)}
+        >
+          הירשם
+        </Button>
+      </Toolbar>
+      <Toolbar
+        component="nav"
+        variant="dense"
+        sx={{ justifyContent: "flex-start", overflowX: "auto" }}
+      >
+        {sections.map((section) => (
+          <Link
+            color="inherit"
+            noWrap
+            key={section.title}
+            variant="body2"
+            href={section.url}
+            sx={{ p: 1, flexShrink: 0 }}
+          >
+            {section.title}
+          </Link>
+        ))}
+      </Toolbar>
+      <SignUpModal show={showModal} onHide={() => setShowModal(false)} />
+    </React.Fragment>
   );
 }
 
-export default MainNavbar;
+MainNavbar.propTypes = {
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  title: PropTypes.string.isRequired,
+};

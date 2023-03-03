@@ -5,21 +5,10 @@ import React from "react";
 
 function SignUpModal(props) {
   return (
-    <Modal
-      {...props}
-      size="sm"
-      aria-labelledby="example-modal-sizes-title-sm"
-      centered
-    >
-      <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">הירשם</Modal.Title>
-      </Modal.Header>
+    <Modal {...props} aria-labelledby="example-modal-sizes-title-sm" centered>
       <Modal.Body>
         <SignUpForm />
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }

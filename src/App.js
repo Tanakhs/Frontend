@@ -6,11 +6,17 @@ import HomePage from "./components/homePage";
 import MainNavbar from "./components/mainNavbar";
 import Container from "@mui/material/Container";
 
+const sections = [
+  { title: "הברית הישנה", url: "#" },
+  { title: "הברית החדשה", url: "#" },
+  { title: "קוראן", url: "#" },
+];
+
 function App() {
   return (
     <div>
       <Container maxWidth="lg" className=".main-div">
-        <MainNavbar />
+        <MainNavbar title='תנ"כס' sections={sections} />
 
         <Routes>
           <Route path="/" element={<HomePage />} />
