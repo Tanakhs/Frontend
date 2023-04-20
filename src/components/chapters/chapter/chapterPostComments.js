@@ -41,11 +41,9 @@ export default function ChapterPostComments(props) {
   };
 
   const deleteCommentHandle = async (index) => {
-    await deleteComment(
-      props.chapterId,
-      comments[index]["id"],
-      jwt
-    ).catch((error) => console.log("error", error));
+    await deleteComment(props.chapterId, comments[index]["id"], jwt).catch(
+      (error) => console.log("error", error)
+    );
     setComments(comments.filter((_, i) => i !== index));
   };
 

@@ -34,7 +34,7 @@ function ChapterCardGrid() {
       ready={requestStatus === REQUEST_STATUS.SUCCESS}
     >
       <Grid container spacing={3}>
-        {chaptersData.map(function(post) {
+        {chaptersData.map(function (post) {
           return (
             <Grid item xs={4} key={post.id}>
               <ChapterCard

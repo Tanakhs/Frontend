@@ -1,16 +1,13 @@
 .rating-div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    direction: ltr;
-
-  }
-
-.rating{
-    margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  direction: ltr;
 }
 
-
+.rating {
+  margin-right: auto;
+}
 
 .img-overlay {
   position: absolute;
@@ -23,10 +20,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #D9D9D999; /* Add this line */
-
+  background-color: #d9d9d999; /* Add this line */
 }
 
-.post-text{
+.post-text {
   text-align: left;
 }

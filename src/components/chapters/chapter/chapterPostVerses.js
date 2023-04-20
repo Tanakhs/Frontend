@@ -10,7 +10,7 @@ function Collapsible(props) {
       </div>
       <div {...getCollapseProps()}>
         <div>
-          {props.verses.map(function(verse, index) {
+          {props.verses.map(function (verse, index) {
             return <p key={index}>{verse}</p>;
           })}
         </div>
