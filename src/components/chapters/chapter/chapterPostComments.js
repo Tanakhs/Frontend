@@ -5,7 +5,11 @@ import {
   deleteComment,
   updateComment,
 } from "../../../apiRequests/apiRequests";
+import { useSelector } from "react-redux";
+
 export default function ChapterPostComments(props) {
+  const jwt = useSelector((state) => state.user.jwt);
+
   const [comments, setComments] = useState(
     JSON.stringify(props.comments) === undefined ? [] : props.comments
   );
@@ -29,7 +33,7 @@ export default function ChapterPostComments(props) {
     if (comment.trim() === "") {
       return;
     }
-    await addComment(props.chapterId, comment)
+    await addComment(props.chapterId, comment, jwt)
       .then((result) =>
         setComments([...comments, { content: comment, id: result["_id"] }])
       )
@@ -37,9 +41,11 @@ export default function ChapterPostComments(props) {
   };
 
   const deleteCommentHandle = async (index) => {
-    await deleteComment(props.chapterId, comments[index]["id"]).catch((error) =>
-      console.log("error", error)
-    );
+    await deleteComment(
+      props.chapterId,
+      comments[index]["id"],
+      jwt
+    ).catch((error) => console.log("error", error));
     setComments(comments.filter((_, i) => i !== index));
   };
 
@@ -57,7 +63,8 @@ export default function ChapterPostComments(props) {
     await updateComment(
       props.chapterId,
       comments[index]["id"],
-      comments[index].content
+      comments[index].content,
+      jwt
     ).catch((error) => console.log("error", error));
   };
 

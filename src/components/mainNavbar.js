@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import SignUpModal from "./signUpModal";
+import React from "react";
 import PropTypes from "prop-types";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -7,10 +6,11 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import Auth from "./auth";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function MainNavbar(props) {
   const { sections, title } = props;
-  const [showModal, setShowModal] = useState(false);
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -31,13 +31,9 @@ export default function MainNavbar(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => setShowModal(true)}
-        >
-          הירשם
-        </Button>
+        <GoogleOAuthProvider clientId="187351366877-am1eo0p70hrbnm3n9jfeumaif87a6io5.apps.googleusercontent.com">
+          <Auth></Auth>
+        </GoogleOAuthProvider>
       </Toolbar>
       <Toolbar
         component="nav"
@@ -57,7 +53,6 @@ export default function MainNavbar(props) {
           </Link>
         ))}
       </Toolbar>
-      <SignUpModal show={showModal} onHide={() => setShowModal(false)} />
     </React.Fragment>
   );
 }
