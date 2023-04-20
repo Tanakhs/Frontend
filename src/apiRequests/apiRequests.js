@@ -1,5 +1,13 @@
-const bearer =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NzMyMTIxNiwianRpIjoiOWRiMTNmNjQtY2UxNC00Y2NlLWEwMjgtMTI1M2M4NGQzZDE3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2NzczMjEyMTYsImV4cCI6MTY3NzQwNzYxNn0.ljsmqp6e2X4Hzirz3BmI6MDRapqZBbHBQc3qqV2BOjU";
+export async function getUserInfo(codeResponse) {
+  var response = await fetch("http://127.0.0.1:5000/api/v1/google_login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ code: codeResponse.code }),
+  });
+  return await response.json();
+}
 export async function getChapters() {
   var response = await fetch("http://127.0.0.1:5000/api/v1/chapters", {
     method: "GET",
@@ -19,9 +27,9 @@ export async function getChapter(chapterId) {
 
   return await response.json();
 }
-export async function addComment(chapterId, comment) {
+export async function addComment(chapterId, comment, jwt) {
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", bearer);
+  myHeaders.append("Authorization", `Bearer ${jwt}`);
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
@@ -42,9 +50,9 @@ export async function addComment(chapterId, comment) {
   return await response.json();
 }
 
-export async function deleteComment(chapterId, commentId) {
+export async function deleteComment(chapterId, commentId, jwt) {
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", bearer);
+  myHeaders.append("Authorization", `Bearer ${jwt}`);
   myHeaders.append("Content-Type", "application/json");
 
   var requestOptions = {
@@ -60,9 +68,9 @@ export async function deleteComment(chapterId, commentId) {
   return await response.json();
 }
 
-export async function updateComment(chapterId, commentId, newContent) {
+export async function updateComment(chapterId, commentId, newContent, jwt) {
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", bearer);
+  myHeaders.append("Authorization", `Bearer ${jwt}`);
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
