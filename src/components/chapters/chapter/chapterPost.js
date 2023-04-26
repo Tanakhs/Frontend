@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ReactPlaceholder from "react-placeholder/lib";
 import ChapterPostHeader from "./chapterPostHeader";
-import ChapterPostVerses from "./chapterPostVerses";
+// import ChapterPostVerses from "./chapterPostVerses";
 import ChapterPostComments from "./chapterPostComments";
 import { getChapter } from "../../../apiRequests/apiRequests";
 export const REQUEST_STATUS = {
@@ -38,7 +38,7 @@ function ChapterPost() {
         book={chapterData.book}
         chapter_letters={chapterData.chapter_letters}
       ></ChapterPostHeader>
-      <ChapterPostVerses verses={chapterData.verses}></ChapterPostVerses>
+      {/* <ChapterPostVerses verses={chapterData.verses}></ChapterPostVerses> */}
       <p>{chapterData.analysis}</p>
       <ChapterPostComments
         chapterId={chapterData["id"]}
