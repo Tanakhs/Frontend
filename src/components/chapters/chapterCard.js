@@ -41,6 +41,7 @@ export default function ChapterCard(props) {
         <Typography>
           <Button size="small">שתפו</Button>
           <Button
+            id="read more"
             size="small"
             onClick={() => navigate(`/chapter/${String(props._id)}`)}
           >

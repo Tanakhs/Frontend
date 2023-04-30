@@ -60,6 +60,7 @@ export default function Auth() {
       {!loggedIn ? (
         <IconButton
           color="primary"
+          id="google login"
           aria-label="add to shopping cart"
           onClick={() => googleLogin()}
         >
