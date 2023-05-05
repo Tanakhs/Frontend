@@ -20,6 +20,7 @@ class MyTestCase(unittest.TestCase):
         self.driver_path = DRIVERS['chrome']
 
         options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option("useAutomationExtension", False)
