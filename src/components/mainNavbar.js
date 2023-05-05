@@ -23,7 +23,7 @@ export default function MainNavbar(props) {
           noWrap
           sx={{ flex: 1 }}
         >
-          <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <a href="/" id="home page" style={{ textDecoration: "none", color: "inherit" }}>
             {" "}
             {title}
           </a>
