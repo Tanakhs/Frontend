@@ -6,21 +6,18 @@ const userSlice = createSlice({
   name: "user",
   initialState: () => {
     // Load initial state from localStorage if available
-    const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
-    return storedUserDetails
-      ? { ...storedUserDetails }
-      : { jwt: null, user: {} };
+    return JSON.parse(sessionStorage.getItem("user"));
   },
   reducers: {
     login: (state, action) => {
       // Update the state with the payload data
-      localStorage.setItem("userDetails", JSON.stringify(action.payload));
+      sessionStorage.setItem("user", JSON.stringify(action.payload));
       return { ...action.payload };
     },
     logout: (state, action) => {
-      localStorage.removeItem("userDetails");
+      sessionStorage.removeItem("user");
       // Clear the state
-      return {};
+      return null;
     },
   },
 });

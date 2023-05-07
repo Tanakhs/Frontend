@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.1",
+    "caniuse-lite": "^1.0.30001482",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-collapsed": "^3.6.0",
@@ -32,6 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",

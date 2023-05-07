@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import Auth from "./auth";
+import Auth from "./auth/auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function MainNavbar(props) {

@@ -1,5 +1,5 @@
 export async function getUserInfo(codeResponse) {
-  var response = await fetch("http://127.0.0.1:5000/api/v1/google_login", {
+  var response = await fetch("/api/v1/google_login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,7 @@ export async function getUserInfo(codeResponse) {
   return await response.json();
 }
 export async function getChapters() {
-  var response = await fetch("http://127.0.0.1:5000/api/v1/chapters", {
+  var response = await fetch("http://localhost:5000/api/v1/chapters", {
     method: "GET",
     headers: {},
   });
@@ -18,7 +18,7 @@ export async function getChapters() {
 
 export async function getChapter(chapterId) {
   var response = await fetch(
-    `http://127.0.0.1:5000/api/v1/chapter/${chapterId}`,
+    `http://localhost:5000/api/v1/chapter/${chapterId}`,
     {
       method: "GET",
       headers: {},
@@ -27,66 +27,54 @@ export async function getChapter(chapterId) {
 
   return await response.json();
 }
-export async function addComment(chapterId, comment, jwt) {
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${jwt}`);
-  myHeaders.append("Content-Type", "application/json");
 
-  var raw = JSON.stringify({
-    content: comment,
-  });
-
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
+export async function addComment(chapterId, comment) {
   const response = await fetch(
-    `http://127.0.0.1:5000/api/v1/comment/${chapterId}`,
-    requestOptions
+    `http://localhost:5000/api/v1/comment/${chapterId}`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        content: comment,
+      }),
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
   return await response.json();
 }
 
-export async function deleteComment(chapterId, commentId, jwt) {
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${jwt}`);
-  myHeaders.append("Content-Type", "application/json");
-
-  var requestOptions = {
-    method: "DELETE",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-
+export async function deleteComment(chapterId, commentId) {
   var response = await fetch(
-    `http://127.0.0.1:5000/api/v1/comment/${chapterId}/${commentId}`,
-    requestOptions
+    `http://localhost:5000/api/v1/comment/${chapterId}/${commentId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
   return await response.json();
 }
 
-export async function updateComment(chapterId, commentId, newContent, jwt) {
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${jwt}`);
-  myHeaders.append("Content-Type", "application/json");
-
-  var raw = JSON.stringify({
-    content: newContent,
-  });
-
-  var requestOptions = {
-    method: "PUT",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
+export async function updateComment(chapterId, commentId, newContent) {
   var response = await fetch(
-    `http://127.0.0.1:5000/api/v1/comment/${chapterId}/${commentId}`,
-    requestOptions
+    `http://localhost:5000/api/v1/comment/${chapterId}/${commentId}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({
+        content: newContent,
+      }),
+      credentials: "include",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
   return await response.json();
 }
