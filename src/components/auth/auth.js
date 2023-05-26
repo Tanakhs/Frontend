@@ -38,7 +38,7 @@ export default function Auth() {
       {!loggedIn ? (
         <IconButton
           color="primary"
-          aria-label="add to shopping cart"
+          aria-label="login"
           onClick={() => googleLogin()}
         >
           <GoogleIcon fontSize="large" />

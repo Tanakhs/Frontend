@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ReactPlaceholder from "react-placeholder/lib";
 import ChapterPostHeader from "./chapterPostHeader";
 // import ChapterPostVerses from "./chapterPostVerses";
-import ChapterPostComments from "./chapterPostComments";
+import NewCommentSection from "./newCommentSection";
 import { getChapter } from "../../../apiRequests/apiRequests";
 export const REQUEST_STATUS = {
   LOADING: "loading",
@@ -40,10 +40,10 @@ function ChapterPost() {
       ></ChapterPostHeader>
       {/* <ChapterPostVerses verses={chapterData.verses}></ChapterPostVerses> */}
       <p>{chapterData.analysis}</p>
-      <ChapterPostComments
+      <NewCommentSection
         chapterId={chapterData["id"]}
         comments={chapterData.comments}
-      ></ChapterPostComments>
+      ></NewCommentSection>
     </ReactPlaceholder>
   );
 }
