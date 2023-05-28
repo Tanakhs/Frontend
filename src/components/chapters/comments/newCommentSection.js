@@ -5,6 +5,7 @@ import {
   updateComment,
 } from "../../../apiRequests/apiRequests";
 import Comment from "./comment";
+import { useSelector } from "react-redux";
 export default function newCommentSection(props) {
   const [comments, setComments] = useState(
     JSON.stringify(props.comments) === undefined ? [] : props.comments
@@ -12,15 +13,19 @@ export default function newCommentSection(props) {
   const [editingIndex, setEditingIndex] = useState(-1);
   const [editingComment, setEditingComment] = useState("");
   const [newComment, setNewComment] = useState("");
+  const user = useSelector((state) => state.user);
 
   const addCommentHandle = async (comment) => {
     if (comment.trim() === "") {
       return;
     }
     await addComment(props.chapterId, comment)
-      .then((result) =>
-        setComments([...comments, { content: comment, id: result["_id"] }])
-      )
+      .then((result) => {
+        setComments([
+          ...comments,
+          { content: comment, id: result["_id"], name: user.name },
+        ]);
+      })
       .catch((error) => console.log("error", error));
     setNewComment("");
   };
@@ -55,7 +60,7 @@ export default function newCommentSection(props) {
   };
 
   return (
-    <div>
+    <>
       <h4>תגובות נוספות</h4>
       <form
         id="comment-form"
@@ -81,21 +86,19 @@ export default function newCommentSection(props) {
           הוסף
         </button>
       </form>
-      <div>
-        {comments.map((comment, index) => (
-          <Comment
-            key={index}
-            index={index}
-            comment={comment}
-            editingComment={editingComment}
-            editingIndex={editingIndex}
-            updateCommentHandle={updateCommentHandle}
-            setEditingComment={setEditingComment}
-            editComment={editComment}
-            deleteCommentHandle={deleteCommentHandle}
-          />
-        ))}
-      </div>
-    </div>
+      {comments.map((comment, index) => (
+        <Comment
+          key={index}
+          index={index}
+          comment={comment}
+          editingComment={editingComment}
+          editingIndex={editingIndex}
+          updateCommentHandle={updateCommentHandle}
+          setEditingComment={setEditingComment}
+          editComment={editComment}
+          deleteCommentHandle={deleteCommentHandle}
+        />
+      ))}
+    </>
   );
 }

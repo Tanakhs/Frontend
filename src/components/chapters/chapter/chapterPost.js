@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ReactPlaceholder from "react-placeholder/lib";
 import ChapterPostHeader from "./chapterPostHeader";
 // import ChapterPostVerses from "./chapterPostVerses";
-import NewCommentSection from "./newCommentSection";
+import NewCommentSection from "../comments/newCommentSection";
 import { getChapter } from "../../../apiRequests/apiRequests";
 export const REQUEST_STATUS = {
   LOADING: "loading",
