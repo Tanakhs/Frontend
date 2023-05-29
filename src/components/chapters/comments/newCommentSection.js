@@ -1,62 +1,45 @@
-import React, { useEffect, useState } from "react";
-import {
-  addComment,
-  deleteComment,
-  updateComment,
-} from "../../../apiRequests/apiRequests";
+import React, { useState } from "react";
+import { addComment } from "../../../apiRequests/apiRequests";
 import Comment from "./comment";
 import { useSelector } from "react-redux";
-export default function newCommentSection(props) {
+
+export default function NewCommentSection(props) {
   const [comments, setComments] = useState(
-    JSON.stringify(props.comments) === undefined ? [] : props.comments
+    props.comments && props.comments.length > 0 ? props.comments : []
   );
-  const [editingIndex, setEditingIndex] = useState(-1);
-  const [editingComment, setEditingComment] = useState("");
   const [newComment, setNewComment] = useState("");
   const user = useSelector((state) => state.user);
-
-  const addCommentHandle = async (comment) => {
-    if (comment.trim() === "") {
-      return;
-    }
-    await addComment(props.chapterId, comment)
-      .then((result) => {
-        setComments([
-          ...comments,
-          { content: comment, id: result["_id"], name: user.name },
-        ]);
-      })
-      .catch((error) => console.log("error", error));
-    setNewComment("");
-  };
-
-  const handleChange = (event) => {
-    setNewComment(event.target.value);
-  };
-
-  const deleteCommentHandle = async (index) => {
-    await deleteComment(props.chapterId, comments[index]["id"]).catch((error) =>
-      console.log("error", error)
-    );
-    setComments(comments.filter((_, i) => i !== index));
-  };
-
-  const editComment = (index) => {
-    setEditingIndex(index);
-    setEditingComment(comments[index].content);
-  };
 
   const updateCommentHandle = async (index, newComment) => {
     const updatedComments = [...comments];
     updatedComments[index].content = newComment;
     setComments(updatedComments);
-    setEditingIndex(-1);
-    setEditingComment("");
-    await updateComment(
-      props.chapterId,
-      comments[index]["id"],
-      comments[index].content
-    ).catch((error) => console.log("error", error));
+  };
+
+  const deleteCommentHandle = async (index) => {
+    setComments(comments.filter((_, i) => i !== index));
+  };
+  const addCommentHandle = async (comment) => {
+    if (comment.trim() === "") {
+      return;
+    }
+    try {
+      const result = await addComment(props.chapterId, comment);
+      const newCommentObject = {
+        content: comment,
+        id: result["_id"],
+        name: user.name,
+        email: user.email,
+      };
+      setComments([...comments, newCommentObject]);
+    } catch (error) {
+      console.log("error", error);
+    }
+    setNewComment("");
+  };
+
+  const handleChange = (event) => {
+    setNewComment(event.target.value);
   };
 
   return (
@@ -76,7 +59,7 @@ export default function newCommentSection(props) {
           onChange={handleChange}
           value={newComment}
         ></textarea>
-        <br></br>
+        <br />
         <button
           disabled={newComment === ""}
           type="submit"
@@ -89,14 +72,12 @@ export default function newCommentSection(props) {
       {comments.map((comment, index) => (
         <Comment
           key={index}
-          index={index}
+          chapterId={props.chapterId}
           comment={comment}
-          editingComment={editingComment}
-          editingIndex={editingIndex}
-          updateCommentHandle={updateCommentHandle}
-          setEditingComment={setEditingComment}
-          editComment={editComment}
-          deleteCommentHandle={deleteCommentHandle}
+          onUpdateComment={(newComment) =>
+            updateCommentHandle(index, newComment)
+          }
+          onDeleteComment={() => deleteCommentHandle(index)}
         />
       ))}
     </>

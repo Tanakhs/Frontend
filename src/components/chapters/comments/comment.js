@@ -10,20 +10,32 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Textarea from "@mui/joy/Textarea";
 import Tooltip from "@mui/material/Tooltip";
 import Grid from "@mui/material/Unstable_Grid2";
+import { deleteComment, updateComment } from "../../../apiRequests/apiRequests";
+import { useSelector } from "react-redux";
 
 export default function Comment({
-  index,
   comment,
-  editingComment,
-  setEditingComment,
-  editingIndex,
-  setEditingIndex,
-  updateCommentHandle,
-  editComment,
-  deleteCommentHandle,
+  chapterId,
+  onUpdateComment,
+  onDeleteComment,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [editingComment, setEditingComment] = useState(null);
+  const user = useSelector((state) => state.user);
 
+  const deleteCommentHandle = async () => {
+    await deleteComment(chapterId, comment["id"]);
+    onDeleteComment();
+  };
+  const updateCommentHandle = async (newComment) => {
+    await updateComment(chapterId, comment["id"], newComment);
+    onUpdateComment(newComment);
+    setEditingComment(null);
+  };
+
+  const editComment = () => {
+    setEditingComment(comment.content);
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -76,49 +88,53 @@ export default function Comment({
             <div style={{ fontSize: "0.7em", color: "gray" }}>
               {formatDate(comment.date_added)}
             </div>
-            <IconButton
-              aria-describedby={id}
-              variant="contained"
-              onClick={handleClick}
-            >
-              <MoreHorizIcon></MoreHorizIcon>
-            </IconButton>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <IconButton
-                size="small"
-                onClick={() => {
-                  editComment(index);
-                  handleClose();
-                }}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() => {
-                  deleteCommentHandle(index);
-                  handleClose();
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Popover>
+            {comment.email == user.email ? (
+              <>
+                <IconButton
+                  aria-describedby={id}
+                  variant="contained"
+                  onClick={handleClick}
+                >
+                  <MoreHorizIcon></MoreHorizIcon>
+                </IconButton>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      editComment();
+                      handleClose();
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      deleteCommentHandle();
+                      handleClose();
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Popover>
+              </>
+            ) : null}
           </div>
-          {editingIndex === index ? (
+          {editingComment !== null ? (
             <form
               style={{ display: "flex" }}
               onSubmit={(e) => {
                 e.preventDefault();
-                updateCommentHandle(index, e.target.elements.comment.value);
+                updateCommentHandle(e.target.elements.comment.value);
               }}
             >
               <Textarea
@@ -133,7 +149,10 @@ export default function Comment({
                 </IconButton>
               </Tooltip>
               <Tooltip title="Cancel">
-                <IconButton size="small" onClick={() => setEditingIndex(-1)}>
+                <IconButton
+                  size="small"
+                  onClick={() => setEditingComment(null)}
+                >
                   <CloseIcon />
                 </IconButton>
               </Tooltip>
