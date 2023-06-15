@@ -7,7 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Auth from "./auth/auth";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function MainNavbar(props) {
   const { sections, title } = props;
@@ -31,9 +30,7 @@ export default function MainNavbar(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <GoogleOAuthProvider clientId="187351366877-am1eo0p70hrbnm3n9jfeumaif87a6io5.apps.googleusercontent.com">
-          <Auth></Auth>
-        </GoogleOAuthProvider>
+        <Auth></Auth>
       </Toolbar>
       <Toolbar
         component="nav"

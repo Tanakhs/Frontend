@@ -1,30 +1,25 @@
 import React, { useState } from "react";
 import { addComment } from "../../../apiRequests/apiRequests";
-import Comment from "./comment";
 import { useSelector } from "react-redux";
+import { Textarea } from "@mui/joy";
+import { Button } from "@mui/material";
+import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Auth from "../../auth/auth";
 
-export default function NewCommentSection(props) {
-  const [comments, setComments] = useState(
-    props.comments && props.comments.length > 0 ? props.comments : []
-  );
+export default function NewCommentSection({
+  chapterId,
+  comments,
+  setComments,
+}) {
   const [newComment, setNewComment] = useState("");
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
-  const updateCommentHandle = async (index, newComment) => {
-    const updatedComments = [...comments];
-    updatedComments[index].content = newComment;
-    setComments(updatedComments);
-  };
-
-  const deleteCommentHandle = async (index) => {
-    setComments(comments.filter((_, i) => i !== index));
-  };
   const addCommentHandle = async (comment) => {
     if (comment.trim() === "") {
       return;
     }
     try {
-      const result = await addComment(props.chapterId, comment);
+      const result = await addComment(chapterId, comment);
       const newCommentObject = {
         content: comment,
         id: result["_id"],
@@ -46,6 +41,7 @@ export default function NewCommentSection(props) {
     <>
       <h4>תגובות נוספות</h4>
       <form
+        style={{ display: "flex" }}
         id="comment-form"
         onSubmit={(e) => {
           e.preventDefault();
@@ -53,33 +49,27 @@ export default function NewCommentSection(props) {
           e.target.elements.comment.value = "";
         }}
       >
-        <textarea
-          id="comment"
+        <Auth></Auth>
+        <Textarea
+          style={{ width: "100%" }}
           placeholder="נא להזין את תוכן התגובה"
-          onChange={handleChange}
+          name="comment"
           value={newComment}
-        ></textarea>
+          onChange={handleChange}
+          disabled={!user}
+        ></Textarea>
         <br />
-        <button
-          disabled={newComment === ""}
+        <Button
+          disabled={newComment === "" || !user}
           type="submit"
           id="add-comment-btn"
           className="comments-section-button"
+          variant="outlined"
+          style={{ whiteSpace: "nowrap", marginRight: "0.5rem" }}
         >
-          הוסף
-        </button>
+          שלח תגובה
+        </Button>
       </form>
-      {comments.map((comment, index) => (
-        <Comment
-          key={index}
-          chapterId={props.chapterId}
-          comment={comment}
-          onUpdateComment={(newComment) =>
-            updateCommentHandle(index, newComment)
-          }
-          onDeleteComment={() => deleteCommentHandle(index)}
-        />
-      ))}
     </>
   );
 }

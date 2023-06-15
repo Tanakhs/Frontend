@@ -6,6 +6,7 @@ import ChapterPostHeader from "./chapterPostHeader";
 // import ChapterPostVerses from "./chapterPostVerses";
 import NewCommentSection from "../comments/newCommentSection";
 import { getChapter } from "../../../apiRequests/apiRequests";
+import CommentGrid from "../comments/commentGrid";
 export const REQUEST_STATUS = {
   LOADING: "loading",
   SUCCESS: "success",
@@ -15,18 +16,19 @@ function ChapterPost() {
   let { _id } = useParams();
   const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
   const [chapterData, setChapterData] = useState([]);
-
+  const [comments, setComments] = useState([]);
   useEffect(() => {
-    async function delayFunc() {
+    async function getChapterData() {
       try {
         var chapter = await getChapter(String(_id));
         setChapterData(chapter);
+        setComments(chapter.comments);
         setRequestStatus(REQUEST_STATUS.SUCCESS);
       } catch (error) {
         setRequestStatus(REQUEST_STATUS.FAILURE);
       }
     }
-    delayFunc();
+    getChapterData();
   }, []);
   return (
     <ReactPlaceholder
@@ -42,8 +44,14 @@ function ChapterPost() {
       <p>{chapterData.analysis}</p>
       <NewCommentSection
         chapterId={chapterData["id"]}
-        comments={chapterData.comments}
+        comments={comments}
+        setComments={setComments}
       ></NewCommentSection>
+      <CommentGrid
+        chapterId={chapterData["id"]}
+        comments={comments}
+        setComments={setComments}
+      ></CommentGrid>
     </ReactPlaceholder>
   );
 }

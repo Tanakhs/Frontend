@@ -21,7 +21,7 @@ export default function Comment({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [editingComment, setEditingComment] = useState(null);
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const deleteCommentHandle = async () => {
     await deleteComment(chapterId, comment["id"]);
@@ -88,7 +88,7 @@ export default function Comment({
             <div style={{ fontSize: "0.7em", color: "gray" }}>
               {formatDate(comment.date_added)}
             </div>
-            {comment.email == user.email ? (
+            {user && comment.email == user.email ? (
               <>
                 <IconButton
                   aria-describedby={id}

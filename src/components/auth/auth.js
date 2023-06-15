@@ -8,29 +8,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../../redux/userSlice";
 
 export default function Auth() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const user = useSelector((state) => state.user);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, [user]);
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
       var loginDetails = await getUserInfo(codeResponse);
-      setLoggedIn(true);
       dispatch(login(loginDetails.user));
     },
   });
 
   const handleLogout = () => {
     dispatch(logout());
-    setLoggedIn(false);
   };
 
   return (
