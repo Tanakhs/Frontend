@@ -8,7 +8,15 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-export default function ChapterCard(props) {
+export default function ChapterCard({
+  _id,
+  title,
+  name,
+  description,
+  chapterChar,
+  moralRating,
+  scientificRating,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -20,7 +28,7 @@ export default function ChapterCard(props) {
       />
       <CardContent>
         <Typography variant="h5" component="div">
-          ואהבת לרעך כמוך
+          {title}
         </Typography>
         <Typography
           variant="h6"
@@ -28,21 +36,20 @@ export default function ChapterCard(props) {
           className="post-text"
           gutterBottom
         >
-          {props.book}: {props.chapter}'
+          {name}: {chapterChar}'
         </Typography>
         <Typography gutterBottom variant="body2" color="text.secondary">
-          לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש
-          שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף.
+          {description}
         </Typography>
-        <ChapterRatings value={props.moralRating} title="מוסר" />
-        <ChapterRatings value={props.scientificRating} title="מדע" />
+        <ChapterRatings value={moralRating} title="מוסר" />
+        <ChapterRatings value={scientificRating} title="מדע" />
       </CardContent>
       <CardActions>
         <Typography>
           <Button size="small">שתפו</Button>
           <Button
             size="small"
-            onClick={() => navigate(`/chapter/${String(props._id)}`)}
+            onClick={() => navigate(`/chapter/${String(_id)}`)}
           >
             קראו עוד
           </Button>

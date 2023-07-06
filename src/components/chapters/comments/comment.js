@@ -10,7 +10,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Textarea from "@mui/joy/Textarea";
 import Tooltip from "@mui/material/Tooltip";
 import Grid from "@mui/material/Unstable_Grid2";
-import { deleteComment, updateComment } from "../../../apiRequests/apiRequests";
+// import { deleteComment, updateComment } from "../../../apiRequests/apiRequests";
 import { useSelector } from "react-redux";
 
 export default function Comment({
@@ -24,11 +24,11 @@ export default function Comment({
   const user = useSelector((state) => state.user.user);
 
   const deleteCommentHandle = async () => {
-    await deleteComment(chapterId, comment["id"]);
+    // await deleteComment(chapterId, comment["id"]);
     onDeleteComment();
   };
   const updateCommentHandle = async (newComment) => {
-    await updateComment(chapterId, comment["id"], newComment);
+    // await updateComment(chapterId, comment["id"], newComment);
     onUpdateComment(newComment);
     setEditingComment(null);
   };

@@ -34,16 +34,19 @@ function ChapterCardGrid() {
       ready={requestStatus === REQUEST_STATUS.SUCCESS}
     >
       <Grid container spacing={3}>
-        {chaptersData.map(function (post) {
+        {chaptersData.map(function(post) {
           return (
             <Grid item xs={4} key={post.id}>
               <ChapterCard
                 _id={post.id}
                 title={post.title}
-                book={post.book}
-                chapter={post.chapter_letters}
-                moralRating={String(post.rating.moral)}
-                scientificRating={String(post.rating.scientific)}
+                name={post.name}
+                description={post.description}
+                chapterChar={post.chapterChar}
+                {...(post.chapterRating && {
+                  moralRating: String(post.chapterRating.moral),
+                  scientificRating: String(post.chapterRating.scientific),
+                })}
               />
             </Grid>
           );

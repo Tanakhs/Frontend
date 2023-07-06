@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addComment } from "../../../apiRequests/apiRequests";
+// import { addComment } from "../../../apiRequests/apiRequests";
 import { useSelector } from "react-redux";
 import { Textarea } from "@mui/joy";
 import { Button } from "@mui/material";
@@ -19,10 +19,10 @@ export default function NewCommentSection({
       return;
     }
     try {
-      const result = await addComment(chapterId, comment);
+      // const result = await addComment(chapterId, comment);
       const newCommentObject = {
         content: comment,
-        id: result["_id"],
+        // id: result["_id"],
         name: user.name,
         email: user.email,
       };

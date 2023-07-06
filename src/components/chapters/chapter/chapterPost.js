@@ -38,10 +38,10 @@ function ChapterPost() {
     >
       <ChapterPostHeader
         book={chapterData.book}
-        chapter_letters={chapterData.chapter_letters}
+        chapter_letters={chapterData.chapterChar}
       ></ChapterPostHeader>
       {/* <ChapterPostVerses verses={chapterData.verses}></ChapterPostVerses> */}
-      <p>{chapterData.analysis}</p>
+      <p>{chapterData.content}</p>
       <NewCommentSection
         chapterId={chapterData["id"]}
         comments={comments}
